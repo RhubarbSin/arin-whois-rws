@@ -16,17 +16,37 @@ class ParserResource(object):
 
 class Parser(argparse.ArgumentParser):
 
-    resources = (ParserResource('poc', ('handle', 'POC Handle')),
-                 ParserResource('org', ('handle', 'Org handle')),
-                 ParserResource('net', ('handle', 'Net handle')),
-                 ParserResource('asn', ('handle', 'ASN handle')),
-                 ParserResource('customer', ('handle', 'Customer handle')),
-                 ParserResource('rdns', ('name', 'Delegation name')),
+    resources = (ParserResource('poc', ('handle', 'the handle of the POC')),
+                 ParserResource('org', ('handle', 'the handle of the organization')),
+                 ParserResource('net', ('handle', 'the handle of the network')),
+                 ParserResource('asn', ('handle', 'the handle of the ASN')),
+                 ParserResource('customer', ('handle', 'the handle of the customer')),
+                 ParserResource('rdns', ('name', 'the name of the delegation (e.g. 0.192.in-addr.arpa.)')),
 
                  ParserResource('orgs', None,
-                                ('handle', 'Org handle'),
-                                ('name', 'Org Name'),
-                                ('dba', 'Org DBA')))
+                                ('handle', 'the handle of the organization'),
+                                ('name', 'the name of organization'),
+                                ('dba', 'the name the organization does business as')),
+                 ParserResource('customers', None,
+                                ('handle', 'the handle of the customer'),
+                                ('name', 'the name of the customer')),
+                 ParserResource('pocs', None,
+                                ('handle', 'the handle of the POC'),
+                                ('domain', 'the domain of the email address for the POC'),
+                                ('first', 'the first name of the POC'),
+                                ('last', 'the last name of the POC'),
+                                ('company', 'the company name registered by the POC'),
+                                ('city', 'the city registered by the POC')),
+                 ParserResource('asns', None,
+                                ('handle', 'the handle of the ASN'),
+                                ('name', 'the name of the ASN')),
+                 ParserResource('nets', None,
+                                ('handle', 'the handle of the network'),
+                                ('name', 'the name of the network')),
+                 ParserResource('rdns', None,
+                                ('name', 'the name of the delegation (e.g. 0.192.in-addr.arpa.)')))
+
+
 
     def populate(self):
         self.add_argument('--output', choices=('xml', 'text', 'html'),
@@ -49,12 +69,6 @@ class Parser(argparse.ArgumentParser):
         for name, description in resource.option.iteritems():
             subparser.add_argument('--%s' % name, metavar=name.upper(),
                                    help=description)
-
-    def _add_orgs(self, subparsers):
-        subparser = subparsers.add_parser('orgs', help='--handle HANDLE --name NAME --dba DBA')
-        subparser.add_argument('--handle', help='Org handle')
-        subparser.add_argument('--name', help='Org name')
-        subparser.add_argument('--dba', help='Org DBA')
 
     def _add_org_related(self, subparsers):
         subparser = subparsers.add_parser('org-related', help='--handle HANDLE --resource RESOURCE')
