@@ -24,7 +24,7 @@ class Call(object):
         print response.content
         return self.module.parseString(response.content)
 
-class SimpleCall(Call):
+class IndividualCall(Call):
 
     """Class for individual resources.
 
@@ -32,7 +32,7 @@ class SimpleCall(Call):
     """
 
     def __init__(self, **kwargs):
-        super(SimpleCall, self).__init__(**kwargs)
+        super(IndividualCall, self).__init__(**kwargs)
         self.url += '/' + kwargs['handle']
 
 class UnrelatedCall(Call):
@@ -40,7 +40,7 @@ class UnrelatedCall(Call):
 
     """Class for lists of unrelated resources.
 
-    Calls look like /RESOURCE;param=value.
+    Calls look like /RESOURCES;PARAM=VALUE.
     """
 
     def __init__(self, **kwargs):
@@ -58,12 +58,12 @@ class RelatedCall(Call):
 
     pass
 
-class Poc(SimpleCall):
+class Poc(IndividualCall):
 
     resource = 'poc'
     module = payload.poc
 
-class Org(SimpleCall):
+class Org(IndividualCall):
 
     resource = 'org'
     module = payload.org
