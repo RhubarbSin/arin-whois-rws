@@ -9,10 +9,10 @@ class ParserResource(object):
 
     @property
     def help_(self):
-        x = self.positional[0].upper() if self.positional else ''
+        h = self.positional[0].upper() if self.positional else ''
         for name in self.option:
-            x += (' --%s %s' % (name, name.upper()))
-        return x
+            h += (' --%s %s' % (name, name.upper()))
+        return h
 
 class Parser(argparse.ArgumentParser):
 
@@ -47,7 +47,7 @@ class Parser(argparse.ArgumentParser):
                                    metavar=resource.positional[0].upper(),
                                    help=resource.positional[1])
         for name, description in resource.option.iteritems():
-            subparser.add_argument(name, metavar=name.upper(),
+            subparser.add_argument('--%s' % name, metavar=name.upper(),
                                    help=description)
 
     def _add_orgs(self, subparsers):
