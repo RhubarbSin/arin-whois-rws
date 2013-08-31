@@ -10,6 +10,9 @@ class Parser(argparse.ArgumentParser):
         self._add_org(subparsers)
         self._add_orgs(subparsers)
 
+    def run(self):
+        return self.parse_args()
+
     def _add_org(self, subparsers):
         self.org = subparsers.add_parser('org', help='HANDLE')
         self.org.add_argument('handle', metavar='HANDLE', help='Org handle')
@@ -19,6 +22,3 @@ class Parser(argparse.ArgumentParser):
         self.org.add_argument('--handle', help='Org handle')
         self.org.add_argument('--name', help='Org name')
         self.org.add_argument('--dba', help='Org DBA')
-
-    def run(self):
-        return self.parse_args()
