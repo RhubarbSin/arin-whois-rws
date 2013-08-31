@@ -52,7 +52,7 @@ class Parser(argparse.ArgumentParser):
         self.add_argument('--output', choices=('xml', 'text', 'html'),
                           default='text')
         subparsers = self.add_subparsers(title='Commands', metavar='',
-                                         dest='call')
+                                         dest='command')
         for resource in self.resources:
             self._add_subparser(subparsers, resource)
 

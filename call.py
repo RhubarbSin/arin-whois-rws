@@ -5,18 +5,6 @@ from payload import poc, org, orgList
 
 BASE_URL = 'http://whois.arin.net/rest/'
 
-class Caller(object):
-
-    def __init__(self, args):
-        if args.call == 'org':
-            call = Org
-        elif args.call == 'orgs':
-            call = Orgs
-        self.call = call(**vars(args))
-
-    def run(self):
-        return self.call.run()
-
 class Call(object):
 
     """Base class for ARIN Whois-RWS calls."""
@@ -86,3 +74,15 @@ class Orgs(UnrelatedCall):
     module = payload.orgList
     params = ('handle', 'name', 'dba')
 
+class Caller(object):
+
+    callmap = {'org': Org,
+               'poc': Poc,
+               'orgs': Orgs}
+
+    def __init__(self, args):
+        call = self.callmap[args.command]
+        self.call = call(**vars(args))
+
+    def run(self):
+        return self.call.run()
