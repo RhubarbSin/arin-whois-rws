@@ -11,7 +11,7 @@ class Parser(argparse.ArgumentParser):
         self._add_orgs(subparsers)
 
     def _add_org(self, subparsers):
-        self.org = subparsers.add_parser('org')
+        self.org = subparsers.add_parser('org', help='HANDLE')
         self.org.add_argument('handle', metavar='HANDLE', help='Org handle')
 
     def _add_orgs(self, subparsers):
