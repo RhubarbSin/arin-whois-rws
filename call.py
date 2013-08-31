@@ -1,7 +1,7 @@
 import requests
 
 import payload
-from payload import org, orgList
+from payload import poc, org, orgList
 
 BASE_URL = 'http://whois.arin.net/rest/'
 
@@ -69,6 +69,11 @@ class RelatedCall(Call):
     """
 
     pass
+
+class Poc(SimpleCall):
+
+    resource = 'poc'
+    module = payload.poc
 
 class Org(SimpleCall):
 
