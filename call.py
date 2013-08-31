@@ -1,7 +1,7 @@
 import requests
 
 import payload
-from payload import org
+from payload import org, orgList
 
 BASE_URL = 'http://whois.arin.net/rest/'
 
@@ -19,8 +19,11 @@ class Caller(object):
 
 class Call(object):
 
-    resource = None  # WHOIS-RWS resource name for URL
-    params = ()  # sequence of WHOIS-RWS matrix parameters
+    """Base class for ARIN Whois-RWS calls."""
+
+    resource = None  # Whois-RWS resource name for URL
+    module = None  # generateDS module for returned payload
+    params = ()  # sequence of Whois-RWS matrix parameters
 
     def __init__(self, **kwargs):
         self.url = BASE_URL + self.resource
@@ -75,4 +78,6 @@ class Org(SimpleCall):
 class Orgs(UnrelatedCall):
 
     resource = 'orgs'
+    module = payload.orgList
     params = ('handle', 'name', 'dba')
+
