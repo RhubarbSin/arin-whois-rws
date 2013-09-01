@@ -44,9 +44,10 @@ class Parser(argparse.ArgumentParser):
                                 ('handle', 'the handle of the network'),
                                 ('name', 'the name of the network')),
                  ParserResource('rdns', None,
-                                ('name', 'the name of the delegation (e.g. 0.192.in-addr.arpa.)')))
-
-
+                                ('name', 'the name of the delegation (e.g. 0.192.in-addr.arpa.)')),
+                 ParserResource('pocs-related', None,
+                                ('handle', 'the handle of the POC'),
+                                ('resource', 'the type of resource associated with the POC')))
 
     def populate(self):
         self.add_argument('--output', choices=('xml', 'text', 'html'),
