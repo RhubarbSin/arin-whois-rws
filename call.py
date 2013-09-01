@@ -1,13 +1,13 @@
 import requests
 
 import payload
-from payload import poc, org, orgList
+from payload import poc, org, network, orgList
 
 BASE_URL = 'http://whois.arin.net/rest/'
 
 class Call(object):
 
-    """Base class for ARIN Whois-RWS calls."""
+    """Base class for ARIN Whois-RWS call."""
 
     resource = None  # Whois-RWS resource name for URL
     module = None  # generateDS module for returned payload
@@ -17,7 +17,6 @@ class Call(object):
         self.url = BASE_URL + self.resource
 
     def run(self):
-        print self.url
         response = requests.get(self.url)
         if response.status_code != requests.codes.ok:
             response.raise_for_status()
@@ -26,7 +25,7 @@ class Call(object):
 
 class IndividualCall(Call):
 
-    """Class for individual resources.
+    """Class for individual resources calls.
 
     Calls look like /RESOURCE/HANDLE.
     """
@@ -67,6 +66,11 @@ class Org(IndividualCall):
 
     resource = 'org'
     module = payload.org
+
+class Net(IndividualCall):
+
+    resource = 'net'
+    module = payload.network
             
 class Orgs(UnrelatedCall):
 
@@ -76,13 +80,18 @@ class Orgs(UnrelatedCall):
 
 class Caller(object):
 
+    """Class for method object that uses Call subclasses."""
+
     callmap = {'org': Org,
                'poc': Poc,
+               'net': Net,
                'orgs': Orgs}
 
     def __init__(self, args):
-        call = self.callmap[args.command]
-        self.call = call(**vars(args))
+        """Instantiate appropriate Call subclass for command in args."""
+
+        call = self.callmap[args.command]  # get corresponding class name
+        self.call = call(**vars(args))  # instantiate class with dict
 
     def run(self):
         return self.call.run()
