@@ -1,0 +1,3 @@
+
+* generateDS
+  : for f in *.xsd; do generateDS.py -a '' --namespacedef='xmlns=http://www.arin.net/whoisrws/core/v1' -o $(basename $f xsd)py $f; done
