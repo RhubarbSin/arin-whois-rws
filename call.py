@@ -36,7 +36,6 @@ class IndividualCall(Call):
 
 class UnrelatedCall(Call):
 
-
     """Class for lists of unrelated resources.
 
     Calls look like /RESOURCES;PARAM=VALUE.
