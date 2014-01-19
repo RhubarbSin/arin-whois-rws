@@ -93,5 +93,5 @@ if __name__ == '__main__':
     p = Parser()
     p.populate()
     args = p.parse_args()
-    if args.command == 'org':
+    # if args.command == 'org':
         
