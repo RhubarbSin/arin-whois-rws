@@ -1,4 +1,4 @@
 #+TITLE: Python Code for using ARIN's Whois RESTful Web Service
 
-This code is incomplete but includes some possibly helpful examples of its use. Try this from the command line:
+This code is incomplete but includes a possibly helpful example of its use. Try this from the command line:
 : ./whois.py org GOGL
