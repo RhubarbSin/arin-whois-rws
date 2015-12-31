@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from StringIO import StringIO
+import lxml.etree as ET
 
 import parse
 import call
@@ -16,7 +17,6 @@ payload.export(stringio, 0, namespace_='')
 xml = stringio.getvalue()
 stringio.close()
 
-import lxml.etree as ET
 dom = ET.fromstring(xml)
 xslt = ET.parse('website.xsl')
 transform = ET.XSLT(xslt)
